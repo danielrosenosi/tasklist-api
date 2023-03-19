@@ -8,6 +8,9 @@ use App\Http\Requests\User\StoreUser;
 use App\Services\ResponseService;
 use App\Transformers\User\UserResource;
 use App\Transformers\User\UserResourceCollection;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Termwind\Components\Dd;
 
 class UserController extends Controller
 {
@@ -17,12 +20,6 @@ class UserController extends Controller
         $this->user = $user;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StoreUser $request)
     {
         try{
@@ -36,4 +33,28 @@ class UserController extends Controller
         return new UserResource($user,array('type' => 'store','route' => 'users.store'));
     }
 
+    public function login(Request $request)
+    {
+        $credentials = $request->only('email', 'name', 'password');
+
+        try {
+            $token = $this
+            ->user
+            ->login($credentials);
+        } catch (\Throwable|\Exception $e) {
+            return ResponseService::exception('users.login',null,$e);
+        }
+
+        return response()->json(compact('token'));
+    }
+
+    public function logout(Request $request) {
+        try {
+            $this->user->logout($request->input('token'));
+        } catch (\Throwable|\Exception $e) {
+            return ResponseService::exception('users.logout', null, $e);
+        }
+
+        return response(['status' => true,'message' => 'Deslogado com sucesso'], 200);
+    }
 }
