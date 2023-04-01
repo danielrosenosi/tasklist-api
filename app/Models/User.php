@@ -8,8 +8,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+use JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -49,5 +52,28 @@ class User extends Authenticatable
             'email' => $fields['email'],
             'password' => Hash::make($fields['password']),
         ]);
+    }
+
+    public function login($credentials){
+        if (!$token = JWTAuth::attempt($credentials)) {
+            throw new \Exception('Credencias incorretas, verifique-as e tente novamente.', -404);
+        }
+        return $token;
+    }
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
+
+    public function logout($token){
+        if (!JWTAuth::invalidate($token)) {
+          throw new \Exception('Erro. Tente novamente.', -404);
+        }
     }
 }
