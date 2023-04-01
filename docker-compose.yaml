@@ -2,7 +2,7 @@ version: "3.2"
 services:
   nginx:
     image: nginx:latest
-    container_name: hospitalcontrol-nginx
+    container_name: tasklist-nginx
     restart: unless-stopped
     ports:
       - "8080:80"
@@ -20,7 +20,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: hospitalcontrol-app
+    container_name: tasklist-app
     restart: unless-stopped
     working_dir: /var/www/
     expose:
@@ -30,14 +30,14 @@ services:
       - ./.docker/php/php-fpm/custom.ini:/usr/local/etc/php/conf.d/php-custom.ini
     networks:
       - minhanet
-  
+
   db:
     image: mariadb
     restart: always
-    ports: 
+    ports:
       - "3306:3306"
-    environment: 
-      MARIADB_DATABASE: hospital-control
+    environment:
+      MARIADB_DATABASE: task-list
       MARIADB_USER: root
       MARIADB_ROOT_PASSWORD: qwe123
     volumes:
