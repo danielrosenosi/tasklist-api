@@ -46,7 +46,8 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
-    public function create($fields) {
+    public function create($fields)
+    {
         return parent::create([
             'name' => $fields['name'],
             'email' => $fields['email'],
@@ -54,7 +55,8 @@ class User extends Authenticatable implements JWTSubject
         ]);
     }
 
-    public function login($credentials){
+    public function login($credentials)
+    {
         if (!$token = JWTAuth::attempt($credentials)) {
             throw new \Exception('Credencias incorretas, verifique-as e tente novamente.', -404);
         }
@@ -71,9 +73,20 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
-    public function logout($token){
+    public function logout($token)
+    {
         if (!JWTAuth::invalidate($token)) {
           throw new \Exception('Erro. Tente novamente.', -404);
         }
+    }
+
+    public function taskList()
+    {
+        return $this->hasMany(TaskList::class);
+    }
+
+    public function task()
+    {
+        return $this->hasMany(Tasks::class);
     }
 }

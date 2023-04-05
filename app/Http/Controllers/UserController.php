@@ -62,6 +62,6 @@ class UserController extends Controller
             return ResponseService::exception('users.logout',null,$e);
         }
 
-        return response(['status' => true,'msg' => 'Deslogado com sucesso'], 200);
+        return response(['status' => true, 'message' => 'Deslogado com sucesso'], 200);
     }
 }
