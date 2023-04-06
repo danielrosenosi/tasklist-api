@@ -20,9 +20,13 @@ Route::post('/register', [UserController::class, 'store'])->name('users.store');
 
 Route::group(['prefix' => 'v1', 'middleware' => 'jwt.verify'],function () {
     Route::apiResources([
-        'taskList' => TaskListController::class
+        'taskList' => TaskListController::class,
+        'tasks' => TasksController::class
     ]);
 
+    Route::put('task/close/{id}', [TasksController::class, 'closeTask'])->name('tasks.closeTask');
+    Route::get('list/tasks/{id}', [TasksController::class, 'tasksByList'])->name('taskList.tasksByList');
+    
     Route::post('completedTaskList', [TaskListController::class, 'completedTaskList'])->name('taskList.completedTaskList');
     Route::post('logout', [UserController::class, 'logout'])->name('users.logout');
 });
