@@ -47,6 +47,14 @@ class TaskListSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'id' => 5,
+                'user_id' => 5,
+                'title' => 'This is my five task list',
+                'status' => 'completed',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ];
 
         foreach ($taskLists as $taskList) {
