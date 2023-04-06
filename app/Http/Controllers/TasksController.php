@@ -6,6 +6,7 @@ use App\Http\Requests\StoreTasksRequest;
 use App\Http\Requests\UpdateTasksRequest;
 use App\Models\Tasks;
 use App\Services\ResponseService;
+use Illuminate\Http\Request;
 
 class TasksController extends Controller
 {
@@ -89,7 +90,7 @@ class TasksController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTasksRequest $request, $id)
+    public function update(Request $request, $id)
     {
         try {
             $data = $this->tasks->udate($request->all(), $id);
