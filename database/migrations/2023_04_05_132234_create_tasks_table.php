@@ -9,14 +9,19 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('tasks', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
+            $table->unsignedInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedInteger('list_id');
+            $table->foreign('list_id')->references('id')->on('task_lists');
+            $table->string('title');
+            $table->integer('status');
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */

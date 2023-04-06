@@ -17,7 +17,13 @@ class TasksFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'id' => 1,
+            'user_id' => 1,
+            'list_id' => 1,
+            'title' => 'Primeira tarefa',
+            'status' => 0,
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

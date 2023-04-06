@@ -17,9 +17,9 @@ class TaskListFactory extends Factory
     public function definition(): array
     {
         return [
-            'id' => 3,
-            'user_id' => 3,
-            'title' => 'This is my third task list',
+            'id' => 1,
+            'user_id' => 1,
+            'title' => 'Primeira lista de tarefas',
             'status' => 'completed',
             'created_at' => now(),
             'updated_at' => now(),
