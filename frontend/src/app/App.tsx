@@ -1,9 +1,9 @@
 import React from 'react';
-import { Routes } from 'react-router-dom';
+import AppRoutes from './routing';
 
 function App() {
   return (
-    <Routes />
+    <AppRoutes />
   );
 }
 
