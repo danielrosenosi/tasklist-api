@@ -1,5 +1,8 @@
 <?php
 
+namespace Database\Seeders;
+
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class TaskListSeeder extends Seeder
@@ -11,7 +14,35 @@ class TaskListSeeder extends Seeder
      */
     public function run()
     {
-        //factory(App\TaskList::class, 10)->create();
-        
+        $taskLists = [
+            [
+                'id' => 1,
+                'user_id' => 1,
+                'title' => 'This is my first task list',
+                'status' => 'completed',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 2,
+                'user_id' => 2,
+                'title' => 'This is my second task list',
+                'status' => 'completed',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 3,
+                'user_id' => 3,
+                'title' => 'This is my third task list',
+                'status' => 'completed',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ];
+
+        foreach ($taskLists as $taskList) {
+            \App\Models\TaskList::factory()->count(1)->create($taskList);
+        }   
     }
 }
