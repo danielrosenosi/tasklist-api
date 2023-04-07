@@ -1,20 +1,34 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { FiLogIn } from "react-icons/fi";
 
-import { FiLogIn } from 'react-icons/fi';
+import api from "../../app/services/api";
+
+import "./styles.css";
 
 export function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const history = useNavigate();
 
-    function handleSubmit() {
+    async function handleSubmit(event: React.FormEvent<HTMLFormElement>, email: string, password: string) {
+        event.preventDefault();
 
+        try {
+            const response = await api.post('api/login', { email, password });
+            localStorage.setItem('token', response.data.token);
+
+            history('/listas');
+        } catch (error) {
+            
+        }
     }
 
     return (
         <div className="login-container">
             <section className="form">
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={(event) => handleSubmit(event, email, password)}>
                     <input
                         placeholder="E-mail"
                         value={email}
