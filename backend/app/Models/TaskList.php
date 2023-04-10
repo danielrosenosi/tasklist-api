@@ -17,17 +17,17 @@ class TaskList extends Model
 
     public function index()
     {
-        return auth()->user()->TaskList()->sortBy('status');
+        return auth()->user()->taskList()->get();
     }
 
     public function create($fields)
     {
-        return auth()->user()->TaskList()->create($fields);
+        return auth()->user()->taskList()->create($fields);
     }
 
     public function show($id)
     {
-        $show = auth()->user()->TaskList()->find($id);
+        $show = auth()->user()->taskList()->find($id);
 
         if(!$show) {
             throw new \Exception('Nada foi encontrado!', 404);

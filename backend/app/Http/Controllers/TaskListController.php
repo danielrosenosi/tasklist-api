@@ -21,9 +21,9 @@ class TaskListController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(TaskList $taskList)
     {
-        return new TaskListResourceCollection($this->taskList->index());
+        return new TaskListResourceCollection($this->$taskList->index());
     }
 
     /**
