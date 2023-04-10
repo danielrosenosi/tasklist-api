@@ -48,10 +48,12 @@ class TasksController extends Controller
 
     public function tasksByList($id)
     {
-        try {
-            $data = $this->tasks->tasksByList($id);
-        } catch (\Throwable|\Exception $error) {
-            return ResponseService::exception('tasks.tasksByList', $id, $error);
+        try{        
+            $data = $this
+            ->tasks
+            ->tasksByList($id);
+        }catch(\Throwable|\Exception $e){
+            return ResponseService::exception('tasks.tasksByList',$id,$e);
         }
 
         return new TasksResourceCollection($data);
@@ -59,13 +61,15 @@ class TasksController extends Controller
 
     public function closeTask($id)
     {
-        try {
-            $data = $this->tasks->closeTask($id);
-        } catch (\Throwable|\Exception $error) {
-            return ResponseService::exception('tasks.closeTask', $id, $error);
+        try{        
+            $data = $this
+            ->tasks
+            ->closeTask($id);
+        }catch(\Throwable|\Exception $e){
+            return ResponseService::exception('tasks.closeTask',$id,$e);
         }
 
-        return new TasksResource($data, array('type' => 'update', 'route' => 'tasks.closeTask'));
+        return new TasksResource($data,array('type' => 'update','route' => 'tasks.closeTask'));
     }
 
     public function update(Request $request, $id)

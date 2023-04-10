@@ -16,14 +16,14 @@ class TaskListController extends Controller
 
     public function __construct(TaskList $taskList)
     {
-        $this->$taskList = $taskList;
+        $this->taskList = $taskList;
     }
     /**
      * Display a listing of the resource.
      */
-    public function index(TaskList $taskList)
+    public function index()
     {
-        return new TaskListResourceCollection($this->$taskList->index());
+        return new TaskListResourceCollection($this->taskList->index());
     }
 
     /**
@@ -37,7 +37,7 @@ class TaskListController extends Controller
             return ResponseService::exception('taskList.store', null, $error);
         }
 
-        return new TaskListResource($data, array('type' => 'store', 'route' => 'tasklist.store'));
+        return new TaskListResource($data, array('type' => 'store', 'route' => 'taskList.store'));
     }
 
     /**

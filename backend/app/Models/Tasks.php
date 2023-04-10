@@ -23,7 +23,7 @@ class Tasks extends Model
 
     public function store($fields)
     {
-        $list = auth()->user()->tasklist()->find($fields['list_id']);
+        $list = auth()->user()->taskList()->find($fields['list_id']);
 
         if(!$list) {
             throw new \Exception('Lista não encontrada', -404);
@@ -49,9 +49,10 @@ class Tasks extends Model
         return $show;
     }
     
-    public function tasksByList()
+    public function tasksByList($listId)
     {
         $tasks = auth()
+            ->user()
             ->tasks()
             ->where('list_id', '=', $listId)
             ->get();
@@ -59,27 +60,24 @@ class Tasks extends Model
         return $tasks;
     }
 
-    public function closeTask($id)
-    {
+    public function closeTask($id){
         $task = $this->show($id);
         $task->update(['status' => 1]);
+        
+        $list = Auth()
+        ->user()
+        ->taskList()->find($task['list_id']);
 
-        $list = auth()
-            ->user()
-            ->taskList()
-            ->find($task['list_id']);
-
-        $taskOpen = auth()
-            ->user()
-            ->tasks()
-            ->where('list_id', '=', $task['list_id'])
-            ->where('status', 0)
-            ->get();
-
-        if(count($taskOpen) === 0) {
+        $taskOpen = Auth()
+        ->user()
+        ->tasks()
+        ->where('list_id', '=', $task['list_id'])
+        ->where('status', 0)
+        ->get();
+        
+        if(count($taskOpen) === 0){
             $list->update(['status' => 1]);
         }
-
         return $task;
     }
 

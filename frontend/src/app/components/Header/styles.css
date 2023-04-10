@@ -1,0 +1,20 @@
+.header {
+    flex-grow: 1,
+}
+
+.menu{
+    background-image: radial-gradient( circle 815px at 23.4% -21.8%,  rgba(9,29,85,1) 0.2%, rgba(0,0,0,1) 100.2% );
+    margin-bottom: 15px;
+}
+
+.menu-title {
+    flex-grow: 1;
+    text-decoration: none;
+    color:#fff;
+}
+  
+.menu-button{
+    margin-right: 10px;
+    background: none;
+    border: none;
+}

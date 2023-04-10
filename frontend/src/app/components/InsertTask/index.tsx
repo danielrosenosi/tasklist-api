@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Grid } from "@material-ui/core";
 import { Card } from "@material-ui/core";
 import { CardActions } from "@material-ui/core";
@@ -11,56 +11,83 @@ import { InputLabel } from "@material-ui/core";
 import { MenuItem } from '@material-ui/core';
 import { FormControl } from '@material-ui/core';
 
-export function InsertTask() {
+type Props = {
+    onInsertTask: any;
+    taskList: any;
+}
+
+export function InsertTask({ onInsertTask, taskList }: Props) {
     const [lists, setLists] = useState([]);
-    const [selectList, setSelectList] = useState("");
+    const [selectedList, setSelectedList] = useState("");
     const [taskName, setTaskName] = useState("");
+
+    function handleChangeSelect(event: any) {
+        setSelectedList(event?.target.value);
+    }
+
+    async function handleInsertTask(event: any) {
+        event.preventDefault();
+
+        await onInsertTask({
+            "list_id": selectedList,
+            "title": taskName,
+            "status": 0
+        });
+
+        setSelectedList("");
+        setTaskName("");
+    }
+
+    useEffect(() => {
+        if(taskList.length > 0) {
+            setLists(taskList);
+        }
+    }, [taskList])
     
     return (
-        <Card>
-            <CardHeader title="Adicionar Tarefa"/>
+        <form noValidate autoComplete="off" onSubmit={handleInsertTask}>
+            <Card>
+                <CardHeader title="Adicionar Tarefa"/>
 
-            <CardContent>
-                <Grid container spacing={3}>
-                    <Grid item xs={12}>
-                        <TextField
-                            id="task-name"
-                            label="Nome da tarefa"
-                            variant="outlined"
-                            fullWidth
-                        />
+                <CardContent>
+                    <Grid container spacing={3}>
+                        <Grid item xs={12}>
+                            <TextField
+                                id="task-name"
+                                label="Nome da tarefa"
+                                variant="outlined"
+                                fullWidth
+                                value={taskName}
+                                onChange={event => setTaskName(event.target.value)}
+                            />
+                        </Grid>
                     </Grid>
-                </Grid>
+                    
+                    <Grid container spacing={3}>
+                        <Grid item xs={12}>
+                            <FormControl fullWidth variant="outlined">
+                                <InputLabel id="list">Lista</InputLabel>
+
+                                <Select
+                                    labelId="list"
+                                    id="demo-simple-select-helper"
+                                    label="Lista"
+                                    value={selectedList}
+                                    onChange={handleChangeSelect}
+                                >
+                                    {lists.map((list: any) => (
+                                        <MenuItem key={list.id} value={list.id}>{list.title}</MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                    </Grid>
+                </CardContent>
                 
-                <Grid container spacing={3}>
-                    <Grid item xs={12}>
-                        {/* <Select
-                            native
-                            fullWidth
-                            label="Lista"
-                        >
-                            <option value="1">Lista 1</option>
-                            <option value="2">Lista 2</option>
-                            <option value="3">Lista 3</option>
-                        </Select> */}
-                        <FormControl fullWidth variant="outlined">
-                            <InputLabel id="list">Lista</InputLabel>
-
-                            <Select
-                                labelId="list"
-                                id="demo-simple-select-helper"
-                                label="Age"
-                            >
-                                
-                            </Select>
-                        </FormControl>
-                    </Grid>
-                </Grid>
-            </CardContent>
-            
-            <CardActions>
-                <Button size="small">Cadastrar Tarefa</Button>
-            </CardActions>
-        </Card>
+                <CardActions>
+                    <Button size="small" type="submit">Cadastrar Tarefa</Button>
+                </CardActions>
+            </Card>
+        </form>
     );
 }

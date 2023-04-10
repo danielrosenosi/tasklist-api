@@ -52,7 +52,7 @@ export function Login() {
 
                     <button className="button" type="submit">Entrar</button>
 
-                    <Link className="back-link" to="/register">
+                    <Link className="back-link" to="/registro">
                         <FiLogIn size={16} color="#3498db" />
                         Criar conta
                     </Link>
