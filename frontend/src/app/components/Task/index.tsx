@@ -29,34 +29,36 @@ export function Task({ list, listId }: Props) {
     const [tasks, setTasks] = useState([]);
 
     async function getTasks(list_id: any = "") {
-        const getList = list_id === "" ? list : list_id;
-        const response = await api.get(`api/v1/list/tasks/${getList}`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });
-
-        if(response.data) {
-            return setTasks(response.data.data);
+        try {
+            const getList = list_id === "" ? list : listId;
+            const response = await api.get(`api/v1/list/tasks/${getList}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+    
+            setTasks(response.data.data);
+        } catch {
+            toast.error("Erro ao carregar tarefas!");
         }
-
-        setTasks([]);
     }
 
     async function handleChange(event: any) {
         event.preventDefault();
 
-        const taskId = parseInt(event.target.value);
+        try {
+            const taskId = parseInt(event.target.value);
 
-        await api.put(`api/v1/task/close/${taskId}`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }).then(response => {
+            const response = await api.put(`api/v1/task/close/${taskId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
             getTasks(response.data.data.list_id);
-        }).catch(() => {
+        } catch {
             toast.error("Erro ao concluir tarefa!");
-        });
+        }
     }
 
     async function handleDelete(task: number) {
@@ -72,8 +74,8 @@ export function Task({ list, listId }: Props) {
     }
 
     useEffect(() => {
-            getTasks();
-    });
+        getTasks();
+    }, []);
 
     return (
         <React.Fragment>

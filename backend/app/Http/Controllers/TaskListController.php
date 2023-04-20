@@ -23,7 +23,7 @@ class TaskListController extends Controller
      */
     public function index()
     {
-        return new TaskListResourceCollection($this->taskList->index());
+        return response()->json($this->taskList->index());
     }
 
     /**
