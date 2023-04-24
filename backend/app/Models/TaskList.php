@@ -21,7 +21,7 @@ class TaskList extends Model
         $tasks = auth()->user()->tasks()->get();
 
         foreach ($lists as $list) {
-            $list['tasks'] = $tasks->where('list_id', '=', $list['id']);
+            $list['tasks'] = $tasks->where('list_id', '=', $list['id'])->toArray();
         }
 
         return $lists;
