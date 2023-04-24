@@ -73,12 +73,6 @@ class TaskListController extends Controller
      */
     public function destroy($id)
     {
-        try {
-            $data = $this->taskList->destroyList($id);
-        } catch(\Throwable|\Exception $error) {
-            return ResponseService::exception('taskList.destroy', $id, $error);
-        }
-
-        return new TaskListResource($data, array('type' => 'destroy', 'route' => 'taskList.destroy'));
+        return response()->json($this->taskList->destroy($id));
     }
 }
