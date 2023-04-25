@@ -24,7 +24,7 @@ export function Header() {
             <AppBar className="menu" position="static">
                 <Toolbar>
                     <Link to="/listas" className="menu-title">
-                        <h1>Task Manager</h1>
+                        <img src="assets/images/todobox.png" alt="Logo" />
                     </Link>
 
                     <button className="menu-button" onClick={handleLogout} type="button" title="Sair do sitema">

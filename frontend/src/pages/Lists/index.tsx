@@ -79,6 +79,7 @@ export function Lists() {
                 navigate("/");
             }
             
+            getLists();
             toast.success("Tarefa cadastrada com sucesso!");
         } catch {
             toast.error("Erro ao cadastrar tarefa!");
@@ -94,7 +95,6 @@ export function Lists() {
             });
 
             getLists();
-
             toast.success("Lista excluída com sucesso!");
         } catch {
             toast.error("Erro ao excluir lista!");
@@ -138,7 +138,9 @@ export function Lists() {
                                             <CardHeader title={list.title} />
 
                                             <CardContent>
-                                                
+                                                {list.tasks.length > 0 && list.tasks.map((task: any) => (
+                                                    <Task task={task} getLists={getLists}/>
+                                                ))}
                                             </CardContent>
                                         </Card>
                                     </Grid>

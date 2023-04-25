@@ -62,9 +62,7 @@ class TasksController extends Controller
     public function closeTask($id)
     {
         try{        
-            $data = $this
-            ->tasks
-            ->closeTask($id);
+            $data = $this->tasks->closeTask($id);
         }catch(\Throwable|\Exception $e){
             return ResponseService::exception('tasks.closeTask',$id,$e);
         }
