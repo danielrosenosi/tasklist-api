@@ -20,7 +20,6 @@ import { Task } from "../../app/components/Task";
 export function Lists() {
     const [token] = useState(localStorage.getItem("token"));
     const [taskList, setTaskList] = useState([]);
-    const [listId, setListId] = useState("");
 
     const navigate = useNavigate();
 
@@ -58,15 +57,12 @@ export function Lists() {
 
             getLists();
             toast.success("Lista cadastrada com sucesso!");
-            setListId(response.data.data.id);
         } catch {
             toast.error("Erro ao cadastrar lista!");
         }
     }
 
     async function onInsertTask(data: any) {
-        setListId("");
-
         try {
             const response = await api.post("api/v1/tasks", data, {
                 headers: {
@@ -105,8 +101,6 @@ export function Lists() {
         getLists();
     }, []);
 
-    console.log(taskList);
-
     return (
         <React.Fragment>
             <Header />
@@ -139,7 +133,7 @@ export function Lists() {
 
                                             <CardContent>
                                                 {list.tasks.length > 0 && list.tasks.map((task: any) => (
-                                                    <Task task={task} getLists={getLists}/>
+                                                    <Task key={task.id} task={task} getLists={getLists}/>
                                                 ))}
                                             </CardContent>
                                         </Card>
