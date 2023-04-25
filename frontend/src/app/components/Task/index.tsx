@@ -33,11 +33,11 @@ export function Task({ task, getLists }: Props) {
         try {
             const taskId = parseInt(event.target.value);
 
-            await api.put(`api/v1/task/close/${taskId}`, {
+            api.put(`api/v1/task/close/${taskId}`, {} ,{
                 headers: {
-                    Authorization: `Bearer ${token}`
+                  Authorization: `Bearer ${token}`,
                 }
-            });
+            })
 
             getLists();
         } catch {

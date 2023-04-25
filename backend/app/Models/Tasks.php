@@ -62,7 +62,12 @@ class Tasks extends Model
 
     public function closeTask($id){
         $task = $this->show($id);
-        $task->update(['status' => 1]);
+        
+        if($task['status'] === 1){
+            $task->update(['status' => 0]);
+        } else {
+            $task->update(['status' => 1]);
+        }
         
         $list = Auth()
         ->user()
