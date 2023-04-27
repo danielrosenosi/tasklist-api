@@ -1,15 +1,8 @@
 import { useEffect, useState } from "react";
-import { Grid } from "@material-ui/core";
-import { Card } from "@material-ui/core";
-import { CardActions } from "@material-ui/core";
-import { CardContent } from "@material-ui/core";
-import { CardHeader } from "@material-ui/core";
-import { Button } from "@material-ui/core";
-import { TextField  } from '@material-ui/core';
-import { Select } from "@material-ui/core";
-import { InputLabel } from "@material-ui/core";
-import { MenuItem } from '@material-ui/core';
-import { FormControl } from '@material-ui/core';
+
+import { Card } from "react-bootstrap";
+import { Button } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 
 type Props = {
     onInsertTask: any;
@@ -45,49 +38,40 @@ export function InsertTask({ onInsertTask, taskList }: Props) {
     }, [taskList])
     
     return (
-        <form noValidate autoComplete="off" onSubmit={handleInsertTask}>
-            <Card>
-                <CardHeader title="Adicionar Tarefa"/>
+        <Card className="h-100">
+            <form onSubmit={handleInsertTask}>
+                <Card.Header>
+                    <h5 className="mb-0">Adicionar Tarefa</h5>
+                </Card.Header>
 
-                <CardContent>
-                    <Grid container spacing={3}>
-                        <Grid item xs={12}>
-                            <TextField
-                                id="task-name"
-                                label="Nome da tarefa"
-                                variant="outlined"
-                                fullWidth
-                                value={taskName}
-                                onChange={event => setTaskName(event.target.value)}
-                            />
-                        </Grid>
-                    </Grid>
-                    
-                    <Grid container spacing={3}>
-                        <Grid item xs={12}>
-                            <FormControl fullWidth variant="outlined">
-                                <InputLabel id="list">Lista</InputLabel>
+                <Card.Body>
+                    <Form.Control
+                        type="text"
+                        placeholder="Nome da tarefa"
+                        autoComplete="off"
+                        required
+                        value={taskName}
+                        onChange={event => setTaskName(event.target.value)}
+                    />
 
-                                <Select
-                                    labelId="list"
-                                    id="demo-simple-select-helper"
-                                    label="Lista"
-                                    value={selectedList}
-                                    onChange={handleChangeSelect}
-                                >
-                                    {lists.map((list: any) => (
-                                        <MenuItem key={list.id} value={list.id}>{list.title}</MenuItem>
-                                    ))}
-                                </Select>
-                            </FormControl>
-                        </Grid>
-                    </Grid>
-                </CardContent>
+                    <Form.Select
+                        id="task-list"
+                        className="mt-3"
+                        required
+                        value={selectedList}
+                        onChange={handleChangeSelect}
+                    >
+                        <option value="">Selecione uma lista</option>
+                        {lists.map((list: any) => (
+                            <option key={list.id} value={list.id}>{list.title}</option>
+                        ))}
+                    </Form.Select>
+                </Card.Body>
                 
-                <CardActions>
-                    <Button size="small" type="submit">Cadastrar Tarefa</Button>
-                </CardActions>
-            </Card>
-        </form>
+                <Card.Footer className="d-flex justify-content-end">
+                    <Button type="submit" variant="success" size="sm">Adicionar</Button>
+                </Card.Footer>
+            </form>
+        </Card>
     );
 }

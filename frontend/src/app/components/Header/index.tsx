@@ -20,7 +20,7 @@ export function Header() {
     }
 
     return (
-        <div className="header">
+        <div className="header mb-4">
             <AppBar className="menu" position="static">
                 <Toolbar>
                     <Link to="/listas" className="menu-title">

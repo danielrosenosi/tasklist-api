@@ -2,20 +2,20 @@ import React, { useEffect, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
-
-import { Container } from "@material-ui/core";
-import { Grid } from "@material-ui/core";
-import { Card } from "@material-ui/core";
-import { CardContent } from "@material-ui/core";
-import { CardHeader } from "@material-ui/core";
 import { FiTrash } from 'react-icons/fi';
+
+import { Container } from "react-bootstrap";
+import { Row } from "react-bootstrap";
+import { Col } from "react-bootstrap";
+import { Card } from "react-bootstrap";
+import { Button } from "react-bootstrap";
+
 import { InsertList } from "../../app/components/InsertList";
 import { InsertTask } from "../../app/components/InsertTask";
-
-import api from "../../app/services/api"
-
 import { Header } from "../../app/components/Header";
 import { Task } from "../../app/components/Task";
+
+import api from "../../app/services/api"
 
 export function Lists() {
     const [token] = useState(localStorage.getItem("token"));
@@ -104,45 +104,49 @@ export function Lists() {
     return (
         <React.Fragment>
             <Header />
-            <br />
-            <Container maxWidth="xl">
-                <Grid container>
-                    <Grid item xs={5}>
+
+            <Container>
+                <Row className="mb-4">
+                    <Col lg={6} md={6}>
                         <InsertList onInsertList={onInsertList} />
-                        <br />
+                    </Col>
+
+                    <Col lg={6} md={6}>
                         <InsertTask taskList={taskList} onInsertTask={onInsertTask}/>
-                    </Grid>
+                    </Col>
+                </Row>
+                
+                <Row>   
+                    {taskList.map((list: any) => (
+                        <Col lg={6} md={6} className="mb-2" key={list.id}>
+                            <Card>
+                                <Card.Header>
+                                    <div className="d-flex justify-content-between align-items-center">
+                                        <h5 className="mb-0">{list.title}</h5>
 
-                    <Grid item xs={7}>
-                        <Container maxWidth="xl">
-                            <Grid container spacing={3}>
-                                {taskList.map((list: any) => (
-                                    <Grid item xs={6} key={list.id}>
-                                        <Card>
-                                            <div className="d-flex justify-content-end me-2 mt-2">
-                                                <FiTrash
-                                                    size={20}
-                                                    color="#a8a8b3"
-                                                    onClick={() => handleDeleteTaskList(list.id)}
-                                                    cursor="pointer"
-                                                    title="Deletar a lista de tarefas"
-                                                />
-                                            </div>
-                                            
-                                            <CardHeader title={list.title} />
+                                        <Button
+                                            variant="danger"
+                                            onClick={() => handleDeleteTaskList(list.id)}
+                                            title={`Excluir lista ${list.title}`}
+                                        >
+                                            <FiTrash />
+                                        </Button>
+                                    </div>
+                                </Card.Header>
 
-                                            <CardContent>
-                                                {list.tasks.length > 0 && list.tasks.map((task: any) => (
-                                                    <Task key={task.id} task={task} getLists={getLists}/>
-                                                ))}
-                                            </CardContent>
-                                        </Card>
-                                    </Grid>
-                                ))}
-                            </Grid>
-                        </Container>
-                    </Grid>
-                </Grid>
+                                <Card.Body>
+                                    {list.tasks.length > 0 ? list.tasks.map((task: any) => (
+                                        <Task key={task.id} task={task} getLists={getLists}/>
+                                    )) : (
+                                        <div className="text-center">
+                                            <small className="text-muted text-center">Nenhuma tarefa cadastrada</small>
+                                        </div>
+                                    )}
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    ))}
+                </Row>
             </Container>
         </React.Fragment>
     );
