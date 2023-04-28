@@ -12,7 +12,7 @@ import { Button } from "react-bootstrap";
 
 import { InsertList } from "../../app/components/InsertList";
 import { InsertTask } from "../../app/components/InsertTask";
-import { Header } from "../../app/components/Header";
+import { Navbar } from "../../app/components/Navbar";
 import { Task } from "../../app/components/Task";
 
 import api from "../../app/services/api"
@@ -103,24 +103,24 @@ export function Lists() {
 
     return (
         <React.Fragment>
-            <Header />
+            <Navbar />
 
-            <Container>
-                <Row className="mb-4">
-                    <Col lg={6} md={6}>
+            <div className="px-4">
+                <Row className="mb-3">
+                    <Col lg={6} md={6} className="mb-2">
                         <InsertList onInsertList={onInsertList} />
                     </Col>
 
-                    <Col lg={6} md={6}>
+                    <Col lg={6} md={6} className="mb-2">
                         <InsertTask taskList={taskList} onInsertTask={onInsertTask}/>
                     </Col>
                 </Row>
                 
                 <Row>   
                     {taskList.map((list: any) => (
-                        <Col lg={6} md={6} className="mb-2" key={list.id}>
+                        <Col lg={4} md={6} className="mb-2" key={list.id}>
                             <Card>
-                                <Card.Header>
+                                <Card.Header className="bg-white">
                                     <div className="d-flex justify-content-between align-items-center">
                                         <h5 className="mb-0">{list.title}</h5>
 
@@ -147,7 +147,7 @@ export function Lists() {
                         </Col>
                     ))}
                 </Row>
-            </Container>
+            </div>
         </React.Fragment>
     );
 }

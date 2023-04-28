@@ -23,13 +23,11 @@ export function InsertList({ onInsertList }: Props) {
     };
 
     return (
-        <Card className="mb-2 h-100">
-            <Card.Header className="d-flex justify-content-between align-items-center">
-                <h5 className="mb-0">Adicionar Lista</h5>
-            </Card.Header>
-            
-            <form onSubmit={handleSubmit}>
-                <Card.Body>
+        <Card className="d-flex h-100">
+            <Card.Title className="fs-5 px-3 mt-3 mb-0">Adicionar Lista</Card.Title>
+
+            <Form onSubmit={handleSubmit}>
+                <Card.Body className="mt-2">
                     <Form.Control
                         type="text"
                         placeholder="Nome da lista"
@@ -38,10 +36,14 @@ export function InsertList({ onInsertList }: Props) {
                         value={listName}
                         onChange={event => setListName(event.target.value)}
                     />
-                    
-                    <Button type="submit" variant="success" size="sm">Adicionar</Button>
                 </Card.Body>
-            </form>
+
+                <Card.Footer className="bg-white d-flex justify-content-end mt-5">
+                    <Button variant="primary" type="submit" size="sm">
+                        Adicionar
+                    </Button>
+                </Card.Footer>
+            </Form>
         </Card>
     );
 }

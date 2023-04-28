@@ -38,13 +38,11 @@ export function InsertTask({ onInsertTask, taskList }: Props) {
     }, [taskList])
     
     return (
-        <Card className="h-100">
-            <form onSubmit={handleInsertTask}>
-                <Card.Header>
-                    <h5 className="mb-0">Adicionar Tarefa</h5>
-                </Card.Header>
+        <Card className="d-flex h-100">
+            <Card.Title className="fs-5 px-3 mt-3 mb-0">Adicionar Tarefa</Card.Title>
 
-                <Card.Body>
+            <Form onSubmit={handleInsertTask}>
+                <Card.Body className="mt-2 mb-2">
                     <Form.Control
                         type="text"
                         placeholder="Nome da tarefa"
@@ -56,7 +54,6 @@ export function InsertTask({ onInsertTask, taskList }: Props) {
 
                     <Form.Select
                         id="task-list"
-                        className="mt-3"
                         required
                         value={selectedList}
                         onChange={handleChangeSelect}
@@ -67,11 +64,13 @@ export function InsertTask({ onInsertTask, taskList }: Props) {
                         ))}
                     </Form.Select>
                 </Card.Body>
-                
-                <Card.Footer className="d-flex justify-content-end">
-                    <Button type="submit" variant="success" size="sm">Adicionar</Button>
+                            
+                <Card.Footer className="bg-white d-flex justify-content-end">
+                    <Button variant="primary" type="submit" size="sm">
+                        Adicionar
+                    </Button>
                 </Card.Footer>
-            </form>
+            </Form>
         </Card>
     );
 }

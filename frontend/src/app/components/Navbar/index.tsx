@@ -6,7 +6,7 @@ import { AppBar, Toolbar  } from '@material-ui/core';
 
 import "./styles.css";
 
-export function Header() {
+export function Navbar() {
     const [token] = useState(localStorage.getItem("token"));
     const navigate = useNavigate();
 
