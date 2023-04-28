@@ -56,9 +56,11 @@ class TaskList extends Model
     {
         $taskList = $this->show($id);
 
-        $taskList->delete($id);
+        auth()->user()->tasks()->where('list_id', $id)->get()->map(function($task) {
+            $task->delete();
+        });
 
-        return $taskList;
+        return $taskList->delete();
     }
 
     public function user()
