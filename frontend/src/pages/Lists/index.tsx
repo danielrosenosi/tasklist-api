@@ -31,7 +31,7 @@ export function Lists() {
                 }
             });
 
-            if(response.data.status && response.data.status === (401 || 498)) {
+            if(response.data.status === (401 || 498)) {
                 localStorage.clear();
                 navigate("/");
             }
@@ -139,7 +139,7 @@ export function Lists() {
                                         <Task key={task.id} task={task} getLists={getLists}/>
                                     )) : (
                                         <div className="text-center">
-                                            <small className="text-muted text-center">Nenhuma tarefa cadastrada</small>
+                                            <h6 className="text-muted text-center">Nenhuma tarefa cadastrada</h6>
                                         </div>
                                     )}
                                 </Card.Body>
