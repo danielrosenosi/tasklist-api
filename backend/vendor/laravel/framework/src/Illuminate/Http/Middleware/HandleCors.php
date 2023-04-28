@@ -45,27 +45,24 @@ class HandleCors
      */
     public function handle($request, Closure $next)
     {
-        if (! $this->hasMatchingPath($request)) {
-            return $next($request);
-        }
+        header("Access-Control-Allow-Origin: *");
 
-        $this->cors->setOptions($this->container['config']->get('cors', []));
+        $headers = [
+            'Access-Control-Allow-Methods' => 'POST,GET,OPTIONS,PUT,DELETE',
+            'Access-Control-Allow-Headers' => 'Content-Type, X-Auth-Token, Origin, Authorization',
+        ];
 
-        if ($this->cors->isPreflightRequest($request)) {
-            $response = $this->cors->handlePreflightRequest($request);
-
-            $this->cors->varyHeader($response, 'Access-Control-Request-Method');
-
-            return $response;
+        if ($request->getMethod() == "OPTIONS"){
+            return response()->json('OK',200,$headers);
         }
 
         $response = $next($request);
 
-        if ($request->getMethod() === 'OPTIONS') {
-            $this->cors->varyHeader($response, 'Access-Control-Request-Method');
+        foreach ($headers as $key => $value) {
+            $response->header($key, $value);
         }
 
-        return $this->cors->addActualRequestHeaders($response, $request);
+        return $response;
     }
 
     /**
