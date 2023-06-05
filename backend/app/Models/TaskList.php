@@ -17,14 +17,14 @@ class TaskList extends Model
 
     public function index()
     {
-        $lists = auth()->user()->taskList()->get();
-        $tasks = auth()->user()->tasks()->get();
+        $taskLists = auth()->user()->taskList()->get();
+        $tasks = auth()->user()->tasks()->get()->groupBy('list_id');
 
-        foreach ($lists as $list) {
-            $list['tasks'] = $tasks->where('list_id', '=', $list['id'])->toArray();
-        }
+        $taskLists->map(function($taskList) use ($tasks) {
+            $taskList->tasks = $tasks[$taskList->id] ?? [];
+        });
 
-        return $lists;
+        return $taskLists;
     }
 
     public function create($fields)
@@ -56,9 +56,11 @@ class TaskList extends Model
     {
         $taskList = $this->show($id);
 
-        $taskList->delete($id);
+        auth()->user()->tasks()->where('list_id', $id)->get()->map(function($task) {
+            $task->delete();
+        });
 
-        return $taskList;
+        return $taskList->delete();
     }
 
     public function user()

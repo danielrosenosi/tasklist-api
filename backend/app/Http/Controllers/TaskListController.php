@@ -73,6 +73,6 @@ class TaskListController extends Controller
      */
     public function destroy($id)
     {
-        return response()->json($this->taskList->destroy($id));
+        return response()->json($this->taskList->destroyList($id));
     }
 }

@@ -37,7 +37,7 @@ services:
     ports:
       - "3306:3306"
     environment:
-      MARIADB_DATABASE: task-list
+      MARIADB_DATABASE: todobox-api
       MARIADB_USER: root
       MARIADB_ROOT_PASSWORD: qwe123
     volumes:
